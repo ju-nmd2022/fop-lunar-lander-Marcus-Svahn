@@ -1,11 +1,15 @@
 /*
     This is the Tie Fighter
 */
+
 background(255,255,255);
 
 let x = 200;
 let y = 200;
-let s = 1;
+let s = 0.2;
+
+
+function tieFighter(x, y, s) {
 
 /*
     LEFT WING
@@ -104,6 +108,7 @@ rect(x + 130 * s, y - 10 * s, 50 * s, 20 * s, 20 * s);
 // cockpit
 fill (140, 140, 140);
 noStroke();
+
 ellipse (x + 50 * s, y, 100 * s);
 
 // cockpit glass
@@ -122,3 +127,22 @@ ellipse (x + 50 * s, y, 25 * s);
 // Guns
 ellipse(x + 30 * s, y + 35 * s, 10 * s);
 ellipse(x + 70 * s, y + 35 * s, 10 * s);
+
+}
+
+tieFighter(50, 300, 0.2);
+
+let tieRotation = 0;
+
+function draw() {
+    clear();
+    push();
+    translate(150, 0);
+    rotate(tieRotation);
+    tieFighter(x, y, s);
+    pop();
+
+    tieRotation = tieRotation + 0;
+    s = s + 0;
+    x = x + 1;
+}
