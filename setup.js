@@ -15,6 +15,14 @@ function setup() {
 function tieFighter(x, y, s) {
 
   /*
+      SHADOW
+  */      
+
+      noStroke();
+      fill (0, 0, 0, 100);
+      ellipse(x+10, 582, 30, 19);
+
+  /*
       LEFT WING
   */
   
