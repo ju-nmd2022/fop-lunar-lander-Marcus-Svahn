@@ -4,11 +4,12 @@ let s = 0.2;
 let gravity = 0;
 let acceleration = 0.2;
 let state = "start";
-
-
+ 
+// setup for html
 function setup() {
   createCanvas(600, 600);
   textAlign(CENTER);
+  frameRate(30);
 }
 
 // This is the spaceship based from Star Wars
@@ -180,6 +181,7 @@ function scenery() {
     ellipse(370, 340, 60);
   }
 
+// the game function that displays the game
   function draw() {
       push();
       clear();
@@ -188,7 +190,7 @@ function scenery() {
 
       tieFighter(x, y+50, s);
 
-
+  
       if (state === "start") {
         startScreen();
       } else if (state === "game") {
