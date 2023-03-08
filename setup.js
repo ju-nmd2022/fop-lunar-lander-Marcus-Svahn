@@ -2,10 +2,11 @@ let x = 200;
 let y = 200;
 let s = 0.2;
 let gravity = 1;
+let state = "start";
 
 function setup() {
   createCanvas(600, 600);
-  frameRate(30);
+  textAlign(CENTER);
 }
   
 function tieFighter(x, y, s) {
@@ -124,58 +125,99 @@ function tieFighter(x, y, s) {
   
   }
   
-  tieFighter(50, 300, 0.2);
+
+// This is the scenery for the game, based on the planet Tatooine
+
+function scenery() {
+    push();
+    noStroke();
+    background(250, 205, 120);
+  
+    // Hills
+    fill(135, 120, 100);
+  
+    // top hill
+    beginShape();
+    vertex(0, 500);
+    vertex(0, 460);
+    bezierVertex(100, 400, 50, 350, 200, 450);
+    bezierVertex(460, 400, 250, 370, 500, 450);
+    bezierVertex(560, 450, 450, 390, 900, 500);
+    vertex(600, 430);
+    vertex(600, 500);
+    endShape();
     
+  // lower hill
+    fill(145, 125, 110);
+    beginShape();
+    vertex(0, 525);
+    vertex(0, 480);
+    bezierVertex(100, 420, 50, 390, 210, 480);
+    bezierVertex(460, 450, 270, 430, 530, 480);
+    vertex(600, 470);
+    vertex(600, 525);
+    endShape();
+  
+    //Ground
+    noStroke();
+    fill(110, 90, 65);
+    rect(0, 525, width, 75 );
+  
+    // suns
+    fill(250, 242, 86);
+    ellipse(500, 400, 60);
+  
+    fill(255, 250, 140);
+    ellipse(370, 340, 60);
+  }
+  
   function draw() {
+
       push();
       clear();
       scenery();
-      tieFighter(x , y, s);
+      tieFighter(x, y, s);
       pop();        
+      state = startScreen();
 
-      y = y + gravity;
+
+      y = y + gravity * 1;
   }
 
-function scenery() {
-  push();
-  noStroke();
-  background(250, 205, 120);
+  function startScreen() {
+    // background fade color
+    noStroke();
+    fill (0, 0, 0 , 100);
+    rect(0, 0, width, height);
 
-  // Hills
-  fill(135, 120, 100);
+    fill(0, 125, 0);
+    rect(140, 135, 320, 180);
 
-  // top hill
-  beginShape();
-  vertex(0, 500);
-  vertex(0, 460);
-  bezierVertex(100, 400, 50, 350, 200, 450);
-  bezierVertex(460, 400, 250, 370, 500, 450);
-  bezierVertex(560, 450, 450, 390, 900, 500);
-  vertex(600, 430);
-  vertex(600, 500);
-  endShape();
-  
-// lower hill
-  fill(145, 125, 110);
-  beginShape();
-  vertex(0, 525);
-  vertex(0, 480);
-  bezierVertex(100, 420, 50, 390, 210, 480);
-  bezierVertex(460, 450, 270, 430, 530, 480);
-  vertex(600, 470);
-  vertex(600, 525);
-  endShape();
+    fill(255, 255, 255); 
+    textSize(48);
+    textStyle(BOLD);
+    text("TIE LANDER", 300, 200);
 
-  //Ground
-  noStroke();
-  fill(110, 90, 65);
-  rect(0, 525, width, 75 );
+    textSize(24);
+    textStyle(NORMAL);
+    text("Press the Spacebar to start", 300, 240);
 
-  // suns
-  fill(250, 242, 86);
-  ellipse(500, 400, 60);
+    textSize(14);
+    textStyle(NORMAL);
+    text("Use the arrows to maneuver the", 300, 275);
+    text("tie-fighter to make a safe landing", 300, 290);
+  }
 
-  fill(255, 250, 140);
-  ellipse(370, 340, 60);
-}
+  function gameScreen() {
+    scenery();
+    tieFighter();
+
+    y = y + gravity
+    gravity = gravity + 
+  }
+
+  function resultScreen() {
+
+  }
+
 
