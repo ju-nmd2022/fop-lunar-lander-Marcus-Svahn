@@ -1,8 +1,8 @@
 let x = 200;
 let y = 200;
 let s = 0.2;
-let gravity = 1;
-let state = "start";
+let gravity = 0;
+let acceleration = 0.2;
 
 function setup() {
   createCanvas(600, 600);
@@ -124,6 +124,7 @@ function tieFighter(x, y, s) {
   ellipse(x + 70 * s, y + 35 * s, 10 * s);
   
   }
+   
   
 
 // This is the scenery for the game, based on the planet Tatooine
@@ -170,28 +171,50 @@ function scenery() {
     fill(255, 250, 140);
     ellipse(370, 340, 60);
   }
-  
-  function draw() {
 
+  let state = "lose";
+
+  function draw() {
       push();
       clear();
       scenery();
-      tieFighter(x, y, s);
-      pop();        
-      state = startScreen();
+      pop();         
 
-
-      y = y + gravity * 1;
+      if (state === "start") {
+        startScreen();
+      } else if (state === "game") {
+        gameScreen();
+      } else if (state === "win") {
+        winScreen();
+      }else if (state === "lose") {
+        loseScreen();
+      }
   }
 
+  
+// change between states
+  function mouseClicked() { 
+        if (state === "start") {
+          state = "game";
+        } else if (state === "game"){
+          state = "result";
+        } else if (state === "result"){
+        } state = "game";
+      }   
+      
+
+
+
+// Start screen with info about the game
   function startScreen() {
     // background fade color
+    push();
     noStroke();
     fill (0, 0, 0 , 100);
     rect(0, 0, width, height);
+    pop();
 
-    fill(0, 125, 0);
-    rect(140, 135, 320, 180);
+    tieFighter(x-55, y-50, s);
 
     fill(255, 255, 255); 
     textSize(48);
@@ -200,24 +223,88 @@ function scenery() {
 
     textSize(24);
     textStyle(NORMAL);
-    text("Press the Spacebar to start", 300, 240);
+    text("Press the Spacebar to Start", 300, 290);
 
     textSize(14);
     textStyle(NORMAL);
-    text("Use the arrows to maneuver the", 300, 275);
-    text("tie-fighter to make a safe landing", 300, 290);
-  }
+    text("Use the arrows to maneuver the", 300, 240);
+    text("tie-fighter to make a safe landing", 300, 255);
 
+
+  }
+  
+ 
+// Game screen the actual game you play 
   function gameScreen() {
     scenery();
-    tieFighter();
+    tieFighter(x+100, y-200, s);
 
-    y = y + gravity
-    gravity = gravity + 
+
+    y = y + gravity;
+    gravity = gravity + acceleration;
+
+
+    // Game controlls (from: https://p5js.org/reference/#/p5/keyIsDown)
+    if (keyIsDown(LEFT_ARROW)) { x -= 5; 
+    }
+
+    if (keyIsDown(RIGHT_ARROW)) {
+      x += 5;
+    }
+
+    if (keyIsDown(UP_ARROW)) {
+      acceleration -= 0.008;
+    } else
+      acceleration += 0.005;
   }
 
-  function resultScreen() {
 
+
+
+// Result Screen where you know if you lost or won
+  function winScreen() {
+    push();
+    noStroke();
+    fill (0, 0, 0 , 100);
+    rect(0, 0, width, height);
+    pop();
+  
+    fill(0, 255, 0); 
+    textSize(48);
+    textStyle(BOLD);
+    text("YOU WON", 300, 200);
+
+    textSize(24);
+    textStyle(NORMAL);
+    text("Press the Spacebar to Restart", 300, 290);
+
+    textSize(14);
+    textStyle(NORMAL);
+    text("You Landed the Tie Fighter safely", 300, 240);
   }
+
+  function loseScreen() {
+    push();
+    noStroke();
+    fill (0, 0, 0 , 100);
+    rect(0, 0, width, height);
+    pop();
+  
+    fill(255, 10, 0); 
+    textSize(48);
+    textStyle(BOLD);
+    text("YOU LOSE", 300, 200);
+
+    textSize(24);
+    textStyle(NORMAL);
+    text("Press the Spacebar to Restart", 300, 290);
+
+    textSize(14);
+    textStyle(NORMAL);
+    text("You crashed the Tie Fighter", 300, 240);
+  }
+  
+  
+
 
 
